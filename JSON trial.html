@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>JSON Test</title>
+        <script>
+            var countOfBlocks = 1;
+            var keyInputHTML = ""
+            var valueInputHTML = ""
+            var baseBlock = ""
+            function loadBS(){
+                keyInputHTML = document.getElementById('key1');
+                valueInputHTML = document.getElementById('value1');
+                baseBlock = document.getElementById('baseKeyValueBlock');
+                console.log(keyInputHTML);
+                console.log(valueInputHTML);
+                console.log(baseBlock);
+
+            }
+            // document.onload = loadBS();
+            function test(a){
+                console.log("TESTING SUCCESSFULL!");
+                console.log(a);
+                
+            }
+            function b(s){
+                console.log("TEST 2");
+                console.log(s.value);
+            }
+            function replicateBlock(){
+                // copy inputblocks for basekeyvalue holder
+                keyInput = keyInputHTML.cloneNode();
+                valueInput = valueInputHTML.cloneNode();
+
+                //New IDs
+                keyInput.id = "key"+ (countOfBlocks+1);
+                keyInput.name = keyInput.id
+                keyInput.value = ""
+                valueInput.id = 'value' + (countOfBlocks+1);
+                valueInput.name = valueInput.id;
+                valueInput.value = ""
+
+                //create new Key-Value Accepting Block
+                newKVBlock = baseBlock.cloneNode();
+                newKVBlock.id = 'baseKeyValueBlock' + (countOfBlocks+1);
+                newKVBlock.innerHTML = 'Key: ';
+                newKVBlock.appendChild(keyInput);
+                newKVBlock.innerHTML = newKVBlock.innerHTML + " &nbsp Value :"
+                newKVBlock.appendChild(valueInput);
+                console.log(newKVBlock);
+
+                //appending the New Block and Setting Counter
+                parentDiv = document.getElementById('baseBlock');
+                parentDiv.insertBefore(newKVBlock,document.getElementById('addButton'));
+                countOfBlocks = countOfBlocks + 1;
+
+                //print Log
+                console.log('Done!');
+                
+
+                
+            }
+            function generateJSON(){
+                console.log('generate Button triggered!');
+                jsObject = new Object();
+                key = 'key';
+                val = 'value';
+                for(var i=1;i<=countOfBlocks;i++){
+                    keyName = document.getElementById(key+i).value;
+                    valueName = document.getElementById(val+i).value;
+                    if( keyName != '')
+                    {
+                        jsObject[keyName] = valueName;
+                    }
+                }
+                rootObj = new Object();
+                rootObj[document.getElementById('root').value] = jsObject;
+                var JSONresponse = JSON.stringify(rootObj);
+                console.log(JSONresponse);
+
+                bd = document.getElementById("mainBody")
+                //creating NEW TextField which canbe Copied
+
+                textarea = document.createElement('textarea');
+                textarea.value = JSONresponse;
+                textarea.rows = '10'
+                textarea.cols = '50'
+                
+                hr = document.createElement('hr');
+
+                newHeading = document.createElement('h3')
+                newHeading.innerHTML = "Copy the Generated JSON here"
+
+                bd.appendChild(hr)
+                bd.appendChild(newHeading)
+                bd.appendChild(textarea)
+            }
+        </script>
+    </head>
+    <body onload="loadBS();" id="mainBody">
+            <p>Generate JSON with simple Key value Pairs</p>
+            <div>
+                <h3>Root element Name: </h3>
+                <input type="text" value="root" id='root' name='root'>
+                <hr />
+                <h4>KEy-Value Pairs</h4>
+                <div id='baseBlock'>
+                <p id='baseKeyValueBlock'>
+                    Key: <input type='text' id='key1' name='key1'> &nbsp Value: <textarea rows='3' cols='30' id='value1' name='value1'></textarea> <br />
+                </p>
+                <button id='addButton' onclick="replicateBlock();">Add Another Key!</button>
+                </div>
+
+            </div>
+            <button onclick='generateJSON();'>Generate JSON!</button>
+    </body>
+
+</html>

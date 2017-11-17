@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      JSON Creator Development
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <div onload="loadBS();" id="mainBody">
+        <p>Generate JSON with simple Key value Pairs</p>
+        <div>
+            <h3>Root element Name: </h3>
+            <input type="text" value="root" id='root' name='root'>
+            <hr />
+            <h4>KEy-Value Pairs</h4>
+            <div id='baseBlock'>
+            <p id='baseKeyValueBlock'>
+                Key: <input type='text' id='key1' name='key1'> &nbsp Value: <textarea rows='3' cols='30' id='value1' name='value1'></textarea> <br />
+            </p>
+            <button id='addButton' onclick="replicateBlock();">Add Another Key!</button>
+            </div>
+
+        </div>
+        <button onclick='generateJSON();'>Generate JSON!</button>
+      </div>
+  
+</ion-content>
